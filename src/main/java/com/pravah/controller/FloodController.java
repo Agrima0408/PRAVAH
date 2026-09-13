@@ -1,9 +1,12 @@
 package com.pravah.controller;
 
 import com.pravah.model.FloodZone;
+import com.pravah.model.WaterSensor;
 import com.pravah.service.FloodZoneService;
 import com.pravah.service.RainfallService;
+import com.pravah.service.WaterSensorService;
 import com.pravah.service.WeatherService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,17 +21,18 @@ public class FloodController {
     private final FloodZoneService service;
     private final WeatherService weatherService;
     private final RainfallService rainfallService;
-    
+    private final WaterSensorService waterSensorService;
 
-    // Single constructor injecting all required dependencies
     public FloodController(
             FloodZoneService service,
             WeatherService weatherService,
-            RainfallService rainfallService) {
+            RainfallService rainfallService,
+            WaterSensorService waterSensorService) {
 
         this.service = service;
         this.weatherService = weatherService;
         this.rainfallService = rainfallService;
+        this.waterSensorService = waterSensorService;
     }
 
     @GetMapping("/flood-zones")
@@ -44,5 +48,10 @@ public class FloodController {
     @GetMapping("/rainfall")
     public List<Map<String, Object>> getDailyRainfall() throws Exception {
         return rainfallService.getDailyRainfall();
+    }
+
+    @GetMapping("/water-sensors")
+    public List<WaterSensor> getWaterSensors() {
+        return waterSensorService.getWaterSensors();
     }
 }
