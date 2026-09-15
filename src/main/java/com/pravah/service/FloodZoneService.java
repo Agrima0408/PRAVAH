@@ -10,13 +10,16 @@ public class FloodZoneService {
 
     private final RainfallService rainfallService;
     private final DrainageService drainageService;
+    private final FloodPredictionService floodPredictionService;
 
     public FloodZoneService(
             RainfallService rainfallService,
-            DrainageService drainageService) {
+            DrainageService drainageService,
+            FloodPredictionService floodPredictionService) {
 
         this.rainfallService = rainfallService;
         this.drainageService = drainageService;
+        this.floodPredictionService = floodPredictionService;
     }
 
     public List<FloodZone> getFloodZones() {
@@ -101,32 +104,30 @@ public class FloodZoneService {
             double rainfall,
             double drainageCapacity) {
 
-        double excessRainfall = rainfall - drainageCapacity;
+        String predictedRisk =
+                floodPredictionService.calculateRisk(
+                        rainfall,
+                        drainageCapacity
+                );
 
-        if (rainfall >= 80) {
+        if (predictedRisk.equals("VERY_HIGH")) {
             return "VERY_HIGH";
         }
 
-        if (excessRainfall >= 20) {
-            return "VERY_HIGH";
-        }
-
-        if (excessRainfall > 0) {
+        if (predictedRisk.equals("HIGH")) {
 
             if (baseRisk.equals("HIGH")
                     || baseRisk.equals("MEDIUM_HIGH")) {
-
                 return "VERY_HIGH";
             }
 
             return "HIGH";
         }
 
-        if (rainfall >= 30) {
+        if (predictedRisk.equals("MEDIUM")) {
 
             if (baseRisk.equals("HIGH")
                     || baseRisk.equals("MEDIUM_HIGH")) {
-
                 return "HIGH";
             }
 

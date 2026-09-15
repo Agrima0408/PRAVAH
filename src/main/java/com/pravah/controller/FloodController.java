@@ -6,6 +6,7 @@ import com.pravah.service.FloodZoneService;
 import com.pravah.service.RainfallService;
 import com.pravah.service.WaterSensorService;
 import com.pravah.service.WeatherService;
+import com.pravah.service.AlertService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +23,16 @@ public class FloodController {
     private final WeatherService weatherService;
     private final RainfallService rainfallService;
     private final WaterSensorService waterSensorService;
-
+    private final AlertService alertService
+            ;
     public FloodController(
             FloodZoneService service,
             WeatherService weatherService,
             RainfallService rainfallService,
-            WaterSensorService waterSensorService) {
+            WaterSensorService waterSensorService,
+            AlertService alertService) {
 
+        this.alertService = alertService;
         this.service = service;
         this.weatherService = weatherService;
         this.rainfallService = rainfallService;
@@ -53,5 +57,10 @@ public class FloodController {
     @GetMapping("/water-sensors")
     public List<WaterSensor> getWaterSensors() {
         return waterSensorService.getWaterSensors();
+    }
+
+    @GetMapping("/alerts")
+    public List<Map<String, Object>> getAlerts() {
+        return alertService.getAlerts();
     }
 }

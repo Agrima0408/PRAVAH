@@ -10,14 +10,47 @@ public class FloodPredictionService {
         if (rainfall < 20) {
             return "LOW";
         }
-        else if (rainfall < 50) {
+
+        if (rainfall < 50) {
             return "MEDIUM";
         }
-        else if (rainfall < 80) {
+
+        if (rainfall < 80) {
             return "HIGH";
         }
-        else {
-            return "VERY HIGH";
+
+        return "VERY_HIGH";
+    }
+
+    public String calculateRisk(
+            double rainfall,
+            double drainageCapacity) {
+
+        double excessRainfall =
+                rainfall - drainageCapacity;
+
+        // Extremely heavy rainfall
+        if (rainfall >= 80) {
+            return "VERY_HIGH";
         }
+
+        // Rainfall significantly exceeds
+        // local drainage capacity
+        if (excessRainfall >= 20) {
+            return "VERY_HIGH";
+        }
+
+        // Rainfall is greater than
+        // drainage capacity
+        if (excessRainfall > 0) {
+            return "HIGH";
+        }
+
+        // Moderate rainfall
+        if (rainfall >= 30) {
+            return "MEDIUM";
+        }
+
+        return "LOW";
     }
 }
