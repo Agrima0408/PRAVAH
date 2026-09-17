@@ -1,5 +1,11 @@
 # 🌊 PRAVAH — Urban Flood Nowcasting System
 
+# PRAVAH – Flood Intelligence Platform
+
+🌐 **Live Demo:** https://pravah-bice.vercel.app/
+
+🔗 **Backend API:** https://pravah-ergp.onrender.com
+
 > **A Spring Boot backend for urban flood risk prediction and emergency response.**
 
 PRAVAH is an **Urban Flood Nowcasting System** developed for **Smart India Hackathon (SIH26085)**.
